@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+<body class="container">
+
+<header th:replace="~{fragments :: header}"></header>
+
+<div class="body">
+    <h1>Create Book Category</h1>
+
+    <!-- Success or Failure Message -->
+    <div th:switch="${categoryCreationStatus}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> The book category has been created successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> There was an error while creating the category. Please try again.
+        </div>
+    </div>
+
+    <!-- Form to create book category -->
+    <form method="post" th:action="@{/categories/create}" th:object="${bookCategory}" class="px-4">
+        <!-- Category Name Field -->
+        <div class="form-group">
+            <label for="name">Category Name</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" required />
+            <p class="error" th:errors="*{name}"></p> <!-- Display error for the 'name' field -->
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-success">Create Category</button>
+        </div>
+
+        <!-- General Error Message -->
+        <div th:if="${errorMsg != null}">
+            <p class="error" th:text="${errorMsg}"></p>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

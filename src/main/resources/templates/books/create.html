@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+<div class="body">
+    <h1>Create Book</h1>
+
+    <!-- Success or Failure Message -->
+    <div th:switch="${bookCreateSuccess}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> Book created successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> Operation failed. Please check the form for errors.
+        </div>
+    </div>
+
+    <form th:action="@{/books/create}" method="post" th:object="${book}" class="px-4">
+        <!-- Book Name -->
+        <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Book Name</label>
+            <div class="col-sm-6">
+                <input type="text" id="name" class="form-control" required name="name" th:field="*{name}" autofocus>
+            </div>
+            <p class="error" th:errors="*{name}"></p>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3 row">
+            <label for="description" class="col-sm-2 col-form-label">Description</label>
+            <div class="col-sm-6">
+                <input type="text" id="description" class="form-control" required name="description" th:field="*{bookDetails.description}">
+            </div>
+            <p class="error" th:errors="*{bookDetails.description}"></p>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3 row">
+            <label for="contactEmail" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-6">
+                <input type="email" id="contactEmail" class="form-control" required name="contactEmail" th:field="*{bookDetails.contactEmail}">
+            </div>
+            <p class="error" th:errors="*{bookDetails.contactEmail}"></p>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3 row">
+            <label for="category" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-6">
+                <select id="category" class="form-control" required name="bookCategory" th:field="*{bookCategory}">
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+            </div>
+            <p class="error" th:errors="*{bookCategory}"></p>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-success">Create Book</button>
+        </div>
+
+        <!-- General Error Message (if any) -->
+        <div th:if="${errorMsg != null}">
+            <p class="error" th:text="${errorMsg}"></p>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+</body>
+</html>

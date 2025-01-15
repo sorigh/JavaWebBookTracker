@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+<div class="header" th:replace="~{fragments :: header}"></div>
+<div class="body">
+
+    <div sec:authorize="isAuthenticated()">
+        <p>Logged user: <span sec:authentication="name"> </span></p>
+        <p>Roles: <span sec:authentication="principal.authorities"> </span></p>
+    </div>
+
+    <h1>Welcome to Book Tracker!</h1>
+
+    <p></p>
+    <div sec:authorize="isAuthenticated()">
+        <p>Username: <span th:text="${user.username}"></span></p>
+        <p>Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
+        <p>E-mail address: <span th:text="${user.emailAddress}"></span></p>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Authority</th>
+            </tr>
+            <tr th:each="role : ${user.roles}">
+                <td th:text="${role.role}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>

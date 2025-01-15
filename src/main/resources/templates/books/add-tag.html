@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+<body>
+<header th:replace="~{fragments :: header}"></header>
+
+<div class="body">
+    <h1>Add Tag to Book</h1>
+
+    <!-- Success or Failure Message -->
+    <div th:switch="${tagAddSuccess}">
+        <div th:case="'Success'" class="alert alert-success">
+            <strong>Success!</strong> Tag added successfully.
+        </div>
+        <div th:case="'Failed'" class="alert alert-danger">
+            <strong>Failure!</strong> There was an error while adding the tag. Please try again.
+        </div>
+    </div>
+
+    <!-- Form to add tag -->
+    <form method="post" th:action="@{/books/add-tag}" th:object="${bookTag}" class="px-4">
+        <!-- Hidden Field for Book -->
+        <div class="form-group">
+            <input type="hidden" th:field="${bookTag.book}">
+        </div>
+
+        <!-- Select Tag Dropdown -->
+        <div class="form-group">
+            <label for="tag">Select Tag</label>
+            <select id="tag" th:field="${bookTag.tag}" class="form-control" required>
+                <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+            </select>
+            <p class="error" th:errors="*{tag}"></p> <!-- Display error message if tag is not selected -->
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-success">Add Tag</button>
+        </div>
+
+        <!-- General Error Message (if any) -->
+        <div th:if="${errorMsg != null}">
+            <p class="error" th:text="${errorMsg}"></p>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

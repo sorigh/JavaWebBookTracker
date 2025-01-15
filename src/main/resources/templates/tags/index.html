@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments :: head}"></head>
+<body class="container">
+<header th:replace="~{fragments :: header}"></header>
+<h1 th:text="${title}"></h1>
+<ul th:if="${tags}">
+    <li th:each="tag : ${tags}" th:text="${tag.name}"></li>
+</ul>
+<p th:unless="${tags}">No tags found!</p>
+<a class="btn btn-primary" href="/tags/create" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Create Tag</a>
+<a class="btn btn-primary" href="/tags/delete" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Delete Tag</a>
+
+
+</body>
+</html>
