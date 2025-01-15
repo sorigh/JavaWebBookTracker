@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+<body class="container">
+<header th:replace="~{fragments :: header}"></header>
+<form th:action="@{/categories/delete}" method="post">
+    <ul>
+        <li th:each="category : ${categories}">
+            <input type="checkbox" th:value="${category.id}" th:name="categoryIds" />
+            <span th:text="${category.name}"></span>
+        </li>
+    </ul>
+    <button type="submit">Delete Selected Categories</button>
+</form>
+</body>
+</html>

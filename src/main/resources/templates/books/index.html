@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments :: head}"></head>
+<body class="container">
+<header th:replace="~{fragments :: header}"></header>
+<p th:unless="${books != null and not #lists.isEmpty(books)}">No books!</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Book Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td><a th:href="'/books/detail?bookId=' + ${book.id}" th:text="${book.name}"></a></td>
+    </tr>
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="/books/create" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Create Books</a>
+<a class="btn btn-primary" href="/books/delete" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Delete Books</a>
+</body>
+</html>

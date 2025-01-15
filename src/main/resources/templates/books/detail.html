@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="~{fragments :: head}"></head>
+
+<body>
+<header th:replace="~{fragments :: header}"></header>
+<table class = "table table-striped">
+    <tr>
+        <th>ID</th>
+        <td th:text="${book.id}"></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td th:text="${book.bookDetails.description}"></td>
+    </tr>
+    <tr>
+        <th>Contact Email</th>
+        <td th:text="${book.bookDetails.contactEmail}"></td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td>
+            <span th:each = "tag : ${tags}" th:text = "${tag.displayName}+' '"></span>
+        </td>
+    </tr>
+
+
+</table>
+
+<a th:href = "'/books/add-tag?bookId=' + ${book.id}">Add Tag</a>
+
+</body>
+</html>
