@@ -90,29 +90,29 @@ public class BookController {
     }
 
     @PostMapping("delete")
-    public String processDeleteBooksForm(@RequestParam(required = false) int[] bookIds){
-
-        for (int id: bookIds){
-            bookRepository.deleteById(id);
+    public String processDeleteBooksForm(@RequestParam(required = false) int[] bookIds) {
+        if (bookIds != null) {
+            for (int id : bookIds) {
+                bookRepository.deleteById(id);
+            }
         }
         return "redirect:/books";
     }
     @GetMapping("detail")
-    public String DisplayBookDetails(@RequestParam Integer bookId, Model model){
-        Optional <Book> result = bookRepository.findById(bookId);
-
-        if (result.isEmpty()){
-            model.addAttribute("title", "Invalid Book ID:" + bookId);
-
-        }else {
+    public String displayBookDetails(@RequestParam Integer bookId, Model model) {
+        System.out.println("Received bookId: " + bookId);
+        Optional<Book> result = bookRepository.findById(bookId);
+        if (result.isEmpty()) {
+            model.addAttribute("title", "Invalid Book ID: " + bookId);
+        } else {
             Book book = result.get();
             model.addAttribute("title", book.getName() + " Details");
             model.addAttribute("book", book);
             model.addAttribute("tags", book.getTags());
-
         }
         return "books/detail";
     }
+
 
     //responds to /books/add-tag?bookId=13
     @GetMapping("add-tag")

@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
 <head th:replace="~{fragments :: head}"></head>
-<body class = "container">
-<header th:replace="~{fragments :: header}"></header>
 
-<form method = "post">
-    <th:block th:each="event : ${events}">
-        <div class = "form-group">
-            <label>
-                <span th:text = "${event.name}"></span>
-                <input type="checkbox" name = "eventIds" th:value = "${event.id}" class ="form-control">
-            </label>
+<body>
+<div class="body">
+    <h1>Delete Book</h1>
+
+    <!-- Success or Failure Message -->
+    <div th:if="${bookDeleteSuccess != null}" class="alert"
+         th:classappend="${bookDeleteSuccess == 'Success' ? 'alert-success' : 'alert-danger'}">
+        <strong th:text="${bookDeleteSuccess == 'Success' ? 'Success!' : 'Failure!'}"></strong>
+        <span th:text="${bookDeleteSuccess == 'Success' ? 'Book deleted successfully.' : 'Operation failed. Please check your selection.'}"></span>
+    </div>
+
+    <form th:action="@{/books/delete}" method="post" class="px-4">
+        <!-- Book Selection -->
+        <div class="mb-3 row">
+            <label for="bookIds" class="col-sm-2 col-form-label">Select Book(s)</label>
+            <div class="col-sm-6">
+                <select id="bookIds" class="form-control" multiple name="bookIds">
+                    <option th:each="book : ${books}" th:value="${book.id}" th:text="${book.name}"></option>
+                </select>
+            </div>
         </div>
-    </th:block>
 
-    <input type = "submit" value = "Delete" class = "btn btn-danger">
-</form>
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-danger">Delete Selected Book(s)</button>
+        </div>
+
+        <!-- General Error Message -->
+        <div th:if="${errorMsg != null}" class="mt-3 alert alert-danger">
+            <p th:text="${errorMsg}"></p>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
 </body>
 </html>

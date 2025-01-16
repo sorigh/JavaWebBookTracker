@@ -18,7 +18,7 @@
     </tbody>
 </table>
 
-<a class="btn btn-primary" href="/books/create" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Create Books</a>
-<a class="btn btn-primary" href="/books/delete" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Delete Books</a>
+<a class="btn btn-primary" href="/books/create" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))">Create Books</a>
+<a class="btn btn-primary" href="/books/delete" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))">Delete Books</a>
 </body>
 </html>
