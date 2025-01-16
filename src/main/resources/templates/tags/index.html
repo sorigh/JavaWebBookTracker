@@ -9,8 +9,8 @@
     <li th:each="tag : ${tags}" th:text="${tag.name}"></li>
 </ul>
 <p th:unless="${tags}">No tags found!</p>
-<a class="btn btn-primary" href="/tags/create" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Create Tag</a>
-<a class="btn btn-primary" href="/tags/delete" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Delete Tag</a>
+<a class="btn btn-primary" href="/tags/create" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))">Create Tag</a>
+<a class="btn btn-primary" href="/tags/delete" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))">Delete Tag</a>
 
 
 </body>

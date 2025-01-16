@@ -3,14 +3,35 @@
 <head th:replace="~{fragments :: head}"></head>
 <body class="container">
 <header th:replace="~{fragments :: header}"></header>
-<form th:action="@{/categories/delete}" method="post">
-    <ul>
-        <li th:each="category : ${categories}">
-            <input type="checkbox" th:value="${category.id}" th:name="categoryIds" />
-            <span th:text="${category.name}"></span>
-        </li>
-    </ul>
-    <button type="submit">Delete Selected Categories</button>
-</form>
+<div class="body">
+    <h1>Delete Categories</h1>
+
+    <!-- Success or Failure Message -->
+    <div th:if="${categoryDeleteStatus != null}" class="alert"
+         th:classappend="${categoryDeleteStatus == 'Success' ? 'alert-success' : 'alert-danger'}">
+        <strong th:text="${categoryDeleteStatus == 'Success' ? 'Success!' : 'Failure!'}"></strong>
+        <span th:text="${categoryDeleteStatus == 'Success' ? 'Category(ies) deleted successfully.' : 'No categories were selected or operation failed.'}"></span>
+    </div>
+
+    <!-- Delete Categories Form -->
+    <form th:action="@{/categories/delete}" method="post" class="px-4">
+        <!-- Category Selection -->
+        <div class="mb-3 row">
+            <label for="categoryIds" class="col-sm-2 col-form-label">Select Categories</label>
+            <div class="col-sm-6">
+                <select id="categoryIds" class="form-control" multiple name="categoryIds">
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="btn btn-danger">Delete Selected Category(ies)</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>

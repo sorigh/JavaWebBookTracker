@@ -38,16 +38,27 @@ public class BookCategoryController {
             return "categories/create";
         }
         bookCategoryRepository.save(bookCategory);
-        return "redirect:/books";
+        return "redirect:/categories";
+    }
+
+    @GetMapping("delete")
+    public String renderDeleteCategoryForm(Model model) {
+        model.addAttribute("categories", bookCategoryRepository.findAll());
+        model.addAttribute("categoryDeleteStatus", null);
+        return "categories/delete";
     }
 
     @PostMapping("delete")
-    public String processDeleteCategories(@RequestParam(required = false) int[] categoryIds) {
-        if (categoryIds != null) {
+    public String processDeleteCategories(@RequestParam(required = false) int[] categoryIds, Model model) {
+        if (categoryIds != null && categoryIds.length > 0) {
             for (int id : categoryIds) {
                 bookCategoryRepository.deleteById(id);
             }
+            model.addAttribute("categoryDeleteStatus", "Success");
+        } else {
+            model.addAttribute("categoryDeleteStatus", "Failed");
         }
-        return "redirect:/categories";
+        model.addAttribute("categories", bookCategoryRepository.findAll());
+        return "categories/delete";
     }
 }

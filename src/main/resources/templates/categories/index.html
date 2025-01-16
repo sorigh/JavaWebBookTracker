@@ -19,7 +19,7 @@
     </tbody>
 </table>
 
-<a class="btn btn-primary" href="/categories/create" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')">Add New Category</a>
-<a class="btn btn-primary" href="/categories/delete" sec:authorize="isAuthenticated() and hasAuthority('ADMIN')" >Delete A Category</a>
+<a class="btn btn-primary" href="/categories/create" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))">Add New Category</a>
+<a class="btn btn-primary" href="/categories/delete" sec:authorize="isAuthenticated() and (hasAuthority('ADMIN') or hasAuthority('USER'))" >Delete A Category</a>
 </body>
 </html>

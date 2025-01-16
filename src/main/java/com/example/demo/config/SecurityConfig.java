@@ -33,8 +33,19 @@ public class SecurityConfig {
                     authConfig.requestMatchers(HttpMethod.GET, "/users").hasAnyAuthority("ADMIN", "DEVELOPER");
                     authConfig.requestMatchers(HttpMethod.GET, "/authorities").hasAnyAuthority("ADMIN", "DEVELOPER");
                     authConfig.requestMatchers(HttpMethod.GET, "/roles").hasAuthority("ADMIN");
-                    authConfig.requestMatchers(HttpMethod.GET, "/books/create").hasAuthority("ADMIN");
-                    authConfig.requestMatchers(HttpMethod.POST, "/books/create").hasAuthority("ADMIN");
+                    authConfig.requestMatchers(HttpMethod.GET, "/books/create").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/books/create").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.GET, "/books/delete").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/books/delete").hasAnyAuthority("ADMIN","USER");
+
+                    authConfig.requestMatchers(HttpMethod.GET, "/categories/create").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/categories/create").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.GET, "/categories/delete").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/categories/delete").hasAnyAuthority("ADMIN","USER");
+
+                    authConfig.requestMatchers(HttpMethod.GET, "/books/add-tag").hasAnyAuthority("ADMIN","USER");
+                    authConfig.requestMatchers(HttpMethod.POST, "/books/add-tag").hasAnyAuthority("ADMIN","USER");
+
                     authConfig.anyRequest().authenticated();
                 })
                 .formLogin(login -> {
